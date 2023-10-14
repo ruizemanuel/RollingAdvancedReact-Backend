@@ -16,7 +16,7 @@ import * as dotenv from 'dotenv'
 //crear la instancia de Express
 const app = express();
 
-//crear un puerto
+//crear un puerto test
 app.set('port', process.env.PORT || 4001);
 
 app.listen(app.get('port'), ()=> {
