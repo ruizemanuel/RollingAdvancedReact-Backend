@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import './database';
-import router from './routes/products.routes';
+import products from './routes/products.routes';
 import auth from './routes/users.routes';
 import users from './routes/listausuarios.routes';
 import pedidos from './routes/pedidos.routes';
@@ -41,17 +41,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 //Rutas
 
-app.use('/apiBurgers', router);
-app.use('/apiBurgers/auth', auth);
-app.use('/apiBurgers/users/usuarios', users);
-app.use('/apiBurgers/pedidos/all', pedidos);
-
-/* app.get('/', (req, res) => {
-    res.send('esto es una prueba desde el backend')
-});
-
-
-app.delete('/borrarAlgo', (req, res) => {
-    res.send('se borró algo')
-});
- */
+app.use('/apiRestaurant/products', products);
+app.use('/apiRestaurant/auth', auth);
+app.use('/apiRestaurant/users', users);
+app.use('/apiRestaurant/pedidos', pedidos);
