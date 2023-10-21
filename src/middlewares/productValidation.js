@@ -17,6 +17,16 @@ const productValidate = [
         throw new Error("El precio del producto debe estar entre 0 y 10000");
       }
     }),
+    check("stock")
+    .notEmpty()
+    .withMessage(" El stock es obligatorio")
+    .custom((value) => {
+      if (value >= 0 && value <= 10000) {
+        return true;
+      } else {
+        throw new Error("El stock del producto debe estar entre 0 y 10000");
+      }
+    }),
   check("description")
     .notEmpty()
     .withMessage("La descripcion es obligatoria")

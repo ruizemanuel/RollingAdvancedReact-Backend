@@ -31,7 +31,7 @@ const createProduct = async (req, res) => {
   try {
     console.log(req.body);
 
-    const { productName, price, description, urlImg, category } = req.body;
+    const { productName, price, stock, description, urlImg, category } = req.body;
 
     //crear un objeto para guardarlo en la BD
     const newProduct = new Product({
@@ -42,6 +42,7 @@ const createProduct = async (req, res) => {
 
       productName,
       price,
+      stock,
       description,
       urlImg,
       category,

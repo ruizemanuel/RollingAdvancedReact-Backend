@@ -14,6 +14,12 @@ const productSchema = new Schema({
     min: 0, //no permita valores negativos
     max: 10000, //chequear con front
   },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0, //no permita valores negativos
+    max: 10000, //chequear con front
+  },
   description: {
     require: true,
     type: String,
