@@ -19,6 +19,9 @@ const pedidoSchema = new Schema({
   min: 0, //no permita valores negativos
   max: 10000, //chequear con front
 },
+date: {
+  type: Date,
+},
  
 });
 

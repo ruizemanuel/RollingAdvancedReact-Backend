@@ -17,6 +17,7 @@ const createPedido = async (req, res) => {
       console.log('DESDE PEDIDO EN BACK', req.body);
   
       const { pedido, email, estado, total  } = req.body;
+      const date = new Date().toISOString().split('T')[0];
   
       //crear un objeto para guardarlo en la BD
       const newPedido = new Pedido({
@@ -28,7 +29,8 @@ const createPedido = async (req, res) => {
         pedido,
         email,
         estado,
-        total
+        total,
+        date
       });
   
       //guardar en BD
