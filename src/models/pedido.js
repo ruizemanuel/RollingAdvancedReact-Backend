@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const pedidoSchema = new Schema({
   pedido : [{
     productName : String,
+    category : String,
     price : Number
      }],
   email: {

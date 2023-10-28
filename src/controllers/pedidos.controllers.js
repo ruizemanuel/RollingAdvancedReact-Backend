@@ -12,6 +12,78 @@ const showPedidos = async (req, res) => {
     }
 };
 
+const getVentasTotalesPorMes = async (req, res) => {
+  try {
+      const ventasPorMes = await Pedido.aggregate([
+          {
+              $match: {
+                  // Filtra por pedidos con una fecha válida
+                  date: { $exists: true }
+              }
+          },
+          {
+              $project: {
+                  month: { $month: "$date" }, // Extrae el mes de la fecha
+                  total: 1 // Incluye el campo 'total'
+              }
+          },
+          {
+              $group: {
+                  _id: "$month", // Agrupa por mes
+                  ventas: { $sum: "$total" } // Calcula la suma de los totales
+              }
+          },
+          {
+              $sort: {
+                  _id: 1 // Ordena por mes
+              }
+          }
+      ]);
+
+      const ventasPorMesConNombre = ventasPorMes.map(item => {
+          return {
+              mes: obtenerNombreDelMes(item._id), // Convierte el número a nombre del mes
+              ventas: item.ventas
+          };
+      });
+
+      res.status(200).json(ventasPorMesConNombre);
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener las ventas totales por mes" });
+  }
+};
+
+// Función para obtener el nombre del mes a partir del número (1 - 12)
+function obtenerNombreDelMes(numeroMes) {
+  const meses = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+  return meses[numeroMes - 1];
+}
+
+const getVentasTotalesPorCategoria = async (req, res) => {
+  try {
+      const ventasPorCategoria = await Pedido.aggregate([
+          {
+              $unwind: "$pedido" // Descompone el array 'pedido' en documentos separados
+          },
+          {
+              $group: {
+                  _id: "$pedido.category", // Renombramos '_id' a 'categoria'
+                  ventas: { $sum: "$pedido.price" } // Calcula la suma de los precios por categoría
+              }
+          }
+      ]);
+
+      res.status(200).json(ventasPorCategoria);
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener las ventas totales por categoría" });
+  }
+};
+
 const createPedido = async (req, res) => {
     try {
       console.log('DESDE PEDIDO EN BACK', req.body);
@@ -134,6 +206,8 @@ const createPedido = async (req, res) => {
 
 export {
     showPedidos,
+    getVentasTotalesPorMes,
+    getVentasTotalesPorCategoria,
     createPedido,
     getOnePedido,
     getUnPedido,

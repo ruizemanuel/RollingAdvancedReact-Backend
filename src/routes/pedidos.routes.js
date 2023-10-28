@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  showPedidos, createPedido, getOnePedido, getUnPedido, updatePedido, deletePedido, deleteUnPedido
+  showPedidos, createPedido, getOnePedido, getUnPedido, updatePedido, deletePedido, deleteUnPedido, getVentasTotalesPorMes, getVentasTotalesPorCategoria
 } from "../controllers/pedidos.controllers";
 
 const router = Router();
@@ -10,6 +10,13 @@ router
   .get(showPedidos)
   .post(createPedido)
 
+router
+  .route("/ventas")
+  .get(getVentasTotalesPorMes)
+
+router
+  .route("/ventasPorCategoria")
+  .get(getVentasTotalesPorCategoria)
 
 router
   .route("/:id")
@@ -21,7 +28,6 @@ router
 router
   .route("/pedido")
   .post(getUnPedido)
-
 
 router
   .route("/pedido/:id")
