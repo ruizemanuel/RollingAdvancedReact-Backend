@@ -14,7 +14,7 @@ const validateJWT = (req, res, next) => {
     try {
         const payload = jwt.verify(token, process.env.SECRET_JWT);
         req.id = payload.uid
-        req.name = payload.username
+        req.name = payload.userName
     } catch (error) {
         console.log(error);
         res.status(401).json({message: "Token no válido - Por favor inicia sesion nuevamente"})

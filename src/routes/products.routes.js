@@ -6,6 +6,7 @@ import {
   getOneProduct,
   updateProduct,
   deleteProduct,
+  showHistory,
 } from "../controllers/products.controllers";
 import productValidate from "../middlewares/productValidation";
 import validateJWT from "../middlewares/validateJWT";
@@ -40,9 +41,15 @@ router
   ); */
 
 router
+  .route("/logs")
+  .get(showHistory)
+
+router
   .route("/:id")
   .get(getOneProduct)
   .delete(validateJWT,deleteProduct)
   .put([validateJWT, productValidate], updateProduct);
+
+
 
 export default router;
