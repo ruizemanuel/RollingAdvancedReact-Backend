@@ -7,7 +7,7 @@ const validateJWT = (req, res, next) => {
 
     if(!token){
         //error 401 que es un error de autentificación
-        res.status(401).json({message: "Es necesario un token"});
+        return res.status(401).json({message: "Es necesario un token"});
     }
 
     //si existe el token
@@ -15,12 +15,13 @@ const validateJWT = (req, res, next) => {
         const payload = jwt.verify(token, process.env.SECRET_JWT);
         req.id = payload.uid
         req.name = payload.userName
+        next();
     } catch (error) {
         console.log(error);
-        res.status(401).json({message: "Token no válido - Por favor inicia sesion nuevamente"})
+        return res.status(401).json({message: "Token no válido - Por favor inicia sesion nuevamente"})
     }
 
-    next();
+    
 }
 
 export default validateJWT;
