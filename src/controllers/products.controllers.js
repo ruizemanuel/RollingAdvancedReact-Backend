@@ -82,7 +82,7 @@ const createProductHistory = async (productId, createdBy, message) => {
 const showHistory = async (req, res) => {
   try {
     //voy obtener un array con el historial guardado en BD
-    const historyList = await ProductHistory.find();
+    const historyList = await ProductHistory.find().sort({ createdAt: 'desc' });
     res.status(200).json(historyList);
   } catch (error) {
     console.log(error);
