@@ -28,7 +28,7 @@ const login = async (req, res) => {
     const token = await generateJWT(user._id, user.name)
     // si el password y email son correctos
     res.status(200).json({
-      message: "User email and password correct",
+      message: "Bienvenido",
       email: user.email,
       name: user.name, 
       uid: user._id,
@@ -70,7 +70,7 @@ const register = async (req, res) => {
     //guardar en BD
     await createdUser.save();
     res.status(201).json({
-      message: "Usuario creado exitosamente",
+      message: "Usuario creado exitosamente, por favor inicia sesión",
       userName: createdUser.name,
       uid: createdUser._id,
       token
