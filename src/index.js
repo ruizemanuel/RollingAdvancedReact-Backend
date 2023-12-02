@@ -10,13 +10,9 @@ import pedidos from './routes/pedidos.routes';
 import * as dotenv from 'dotenv' 
 
 
-//console.log('estoy en mi backend');
 
-
-//crear la instancia de Express
 const app = express();
 
-//crear un puerto test
 app.set('port', process.env.PORT || 4001);
 
 app.listen(app.get('port'), ()=> {
@@ -28,18 +24,15 @@ app.listen(app.get('port'), ()=> {
 });
 
 
-//middlewares
 dotenv.config()
-app.use(morgan('dev')); //nos da info de la consulta como ser el tipo, status, tiempo de ejecución
-app.use(cors()); //nos permite recibir peticiones remotas a nuestra API
+app.use(morgan('dev')); 
+app.use(cors()); 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));//estos  dos últimos permiten recibir e interpretar el json de la req
+app.use(express.urlencoded({ extended: true }));
 
-//app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, '../public')));
 
 
-//Rutas
 
 app.use('/apiRestaurant/products', products);
 app.use('/apiRestaurant/auth', auth);
